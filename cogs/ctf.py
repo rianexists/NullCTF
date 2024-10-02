@@ -135,7 +135,7 @@ class CTF(commands.Cog):
         server = teamdb[str(ctx.guild.id)]
         await ctx.guild.create_role(name=ctf_name, mentionable=True)         
         ctf_info = {'name': ctf_name, "text_channel": ctf_name}
-        server.update({'name': ctf_name}, {"$set": ctf_info}, upsert=True)
+        server.update_one({'name': ctf_name}, {"$set": ctf_info}, upsert=True)
         # Give a visual confirmation of completion.
         await ctx.message.add_reaction("✅")
     
@@ -223,7 +223,7 @@ which will move the channel and delete the role, but retain challenge info(`>con
         ctf_info = {'name': str(ctx.message.channel),
         'challenges': challenges
         }
-        server.update({'name': str(ctx.message.channel)}, {"$set": ctf_info}, upsert=True)
+        server.update_one({'name': str(ctx.message.channel)}, {"$set": ctf_info}, upsert=True)
 
     
     @challenge.command(aliases=["a"])
@@ -258,7 +258,7 @@ which will move the channel and delete the role, but retain challenge info(`>con
         ctf_info = {'name': str(ctx.message.channel),
         'challenges': challenges
         }
-        teamdb[str(ctx.guild.id)].update({'name': str(ctx.message.channel)}, {"$set": ctf_info}, upsert=True)
+        teamdb[str(ctx.guild.id)].update_one({'name': str(ctx.message.channel)}, {"$set": ctf_info}, upsert=True)
         await ctx.send(f"Removed `{name}`")
     
     @challenge.command(aliases=['get', 'ctfd'])
@@ -282,7 +282,7 @@ which will move the channel and delete the role, but retain challenge info(`>con
             ctf_info = {'name': str(ctx.message.channel),
             'challenges': challenges
             }
-            teamdb[str(ctx.guild.id)].update({'name': str(ctx.message.channel)}, {"$set": ctf_info}, upsert=True)
+            teamdb[str(ctx.guild.id)].update_one({'name': str(ctx.message.channel)}, {"$set": ctf_info}, upsert=True)
             await ctx.message.add_reaction("✅")
         except InvalidProvider as ipm:
             await ctx.send(ipm)

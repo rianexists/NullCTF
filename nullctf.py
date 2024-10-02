@@ -104,7 +104,7 @@ if __name__ == '__main__':
     sys.path.insert(1, os.getcwd() + '/cogs/')
     for extension in extensions:
         try:
-            bot.load_extension(extension)
+            bot.load_extension("cogs." + extension)
         except Exception as e:
             print(f'Failed to load cogs : {e}')
     bot.run(config_vars.discord_token)
